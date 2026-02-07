@@ -2,4 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red">#FFFF0000</color>
+    <color name="green">#FF00FF00</color>
+    <color name="app_bg">#FFFFFFFF</color>
+    <color name="edit_text_hint">#4D4D4D</color>
+    <color name="btn_convert_bg">#E49090</color>
+    <color name="btn_convert_text">#502B2B</color>
+
+
 </resources>
