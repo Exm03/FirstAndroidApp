@@ -35,6 +35,6 @@ public class AboutActivity extends AppCompatActivity {
 
 
         resultText = findViewById(R.id.resultText);
-        resultText.setText(String.format("Name: %s\nAge: %s\nIs Premium: %b\nMessage: %s", username, age, isPremium ? "Yes" : "No", message));
+        resultText.setText(String.format("Name: %s\nAge: %s\nIs Premium: %s\nMessage: %s", username, age, isPremium ? "Yes" : "No", message));
     }
 }

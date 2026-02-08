@@ -2,12 +2,14 @@ package com.example.firstapp;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,10 @@ public class MainActivity extends AppCompatActivity {
 //    private ActivityMainBinding binding;
     private Button btnConvert;
     private ImageButton btnToActivity;
+    private ImageView imageToChange, imageButtonChange;
+
+    private int countClicks = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +43,70 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        btnConvert = findViewById(R.id.btnConvert);
+        int orentation = getResources().getConfiguration().orientation;
+
+
+        //Images
+        if (orentation == Configuration.ORIENTATION_LANDSCAPE) {
+            imageToChange = findViewById(R.id.imageToChange);
+            imageButtonChange = findViewById(R.id.imageButtonChange);
+
+            imageButtonChange.setOnClickListener(v -> {
+                countClicks++;
+                switch (countClicks) {
+                    case 1:
+                        imageToChange.setImageResource(R.drawable.chocolate_chip_cookies);
+                        break;
+                    case 2:
+                        imageToChange.setImageResource(R.drawable.cookie_icon);
+                        break;
+                    case 3:
+                        imageToChange.setImageResource(R.drawable.cooockie);
+                        countClicks = 0;
+                        break;
+                }
+
+
+            });
+        }
+
+        //Buttons
+        if (orentation == Configuration.ORIENTATION_PORTRAIT) {
+            btnConvert = findViewById(R.id.btnConvert);
+
+
+
+            btnConvert.setOnClickListener(v -> {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Are you sure you want to convert?");
+                builder.setCancelable(false);
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ConvertSpeede();
+                    }
+                });
+                builder.setNegativeButton("No",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(getApplicationContext(), "Cancelled", Toast.LENGTH_SHORT).show();
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.setTitle("Convertation");
+                alertDialog.show();
+
+            });
+
+            btnConvert.setOnLongClickListener(v -> {
+                btnConvert.setTextColor(Color.RED);
+                return true;
+            });
+        }
+
         btnToActivity = findViewById(R.id.btnToActivity);
 
         btnToActivity.setOnClickListener(v -> {
@@ -50,42 +119,16 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        btnConvert.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Are you sure you want to convert?");
-            builder.setCancelable(false);
-            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    ConvertSpeede();
-                }
-                    });
-            builder.setNegativeButton("No",
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getApplicationContext(), "Cancelled", Toast.LENGTH_SHORT).show();
-                            dialog.cancel();
-                        }
-                    });
-
-            AlertDialog alertDialog = builder.create();
-            alertDialog.setTitle("Convertation");
-            alertDialog.show();
-
-        });
-
-        btnConvert.setOnLongClickListener(v ->{
-            btnConvert.setTextColor(Color.RED);
-            return true;
-        });
 
 //        binding = ActivityMainBinding.inflate(getLayoutInflater());
 //        setContentView(binding.getRoot());
 //
 //        binding.btnConvert.setOnClickListener(v ->
 //                binding.textResult.setText("clicked"));
-    }
+        }
+
+
+
 
 
 
