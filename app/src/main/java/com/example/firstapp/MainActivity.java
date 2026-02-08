@@ -1,11 +1,13 @@
 package com.example.firstapp;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
 //    private ActivityMainBinding binding;
     private Button btnConvert;
+    private ImageButton btnToActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btnConvert = findViewById(R.id.btnConvert);
+        btnToActivity = findViewById(R.id.btnToActivity);
+
+        btnToActivity.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+            intent.putExtra("user", "Yan");
+            intent.putExtra("age", 25);
+            intent.putExtra("isPremium", true);
+            intent.putExtra("message", "Hello from MainActivity3");
+
+            startActivity(intent);
+        });
 
         btnConvert.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
